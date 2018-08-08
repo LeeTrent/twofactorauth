@@ -1,4 +1,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +43,11 @@
                         {
                             <li><a asp-page="/Enrollments/Index">My Programs</a></li>
                         }
+
+                        @if (( await AuthorizationService.AuthorizeAsync(User, "CanAccessStudentLink")).Succeeded)
+                        {
+                            <li><a asp-page="/Enrollments/Index">TwoFactor is enabled!</a></li>
+                        }                        
                     }
                     
                     @if (SignInManager.IsSignedIn(User))
