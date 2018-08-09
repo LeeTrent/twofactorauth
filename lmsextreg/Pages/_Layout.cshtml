@@ -37,15 +37,12 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-page="/Index">Home</a></li>
 
-                    @if (SignInManager.IsSignedIn(User))
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanAccessStudentLink")).Succeeded)
                     {
-                        @if (( await AuthorizationService.AuthorizeAsync(User, "CanAccessStudentLink")).Succeeded)
-                        {
-                            <li><a asp-page="/Enrollments/Index">My Programs</a></li>
-                        }    
-                    }
-                    
-                    @if (( await AuthorizationService.AuthorizeAsync(User, "CanAccessApproverLink")).Succeeded)
+                        <li><a asp-page="/Enrollments/Index">My Programs</a></li>
+                    }    
+                  
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "CanAccessApproverLink")).Succeeded)
                     {
                         <li><a asp-page="/Approvals/Index">Enrollments</a></li>
                     }    
