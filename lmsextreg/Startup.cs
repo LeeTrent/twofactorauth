@@ -127,9 +127,13 @@ namespace lmsextreg
             {
                 options.AddPolicy("CanAccessStudentLink", policy =>
                     policy.Requirements.Add(new CanAccessStudentLink()));
+
+                options.AddPolicy("CanAccessApproverLink", policy =>
+                    policy.Requirements.Add(new CanAccessApproverLink()));                    
             });
 
             services.AddScoped<IAuthorizationHandler, CanAccessStudentLinkHandler>();
+            services.AddScoped<IAuthorizationHandler, CanAccessApproverLinkHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

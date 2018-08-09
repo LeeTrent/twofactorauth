@@ -45,13 +45,10 @@
                         }    
                     }
                     
-                    @if (SignInManager.IsSignedIn(User))
+                    @if (( await AuthorizationService.AuthorizeAsync(User, "CanAccessApproverLink")).Succeeded)
                     {
-                        @if ( User.IsInRole("APPROVER") )
-                        {
-                            <li><a asp-page="/Approvals/Index">Enrollments</a></li>
-                        }
-                    }
+                        <li><a asp-page="/Approvals/Index">Enrollments</a></li>
+                    }    
                     
                     <li><a asp-page="/About">About</a></li>
                     <li><a asp-page="/Contact">Contact</a></li>
