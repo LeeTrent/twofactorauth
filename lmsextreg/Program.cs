@@ -25,8 +25,8 @@ namespace lmsextreg
                 try
                 {
                     var services = scope.ServiceProvider;
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    context.Database.Migrate();
+                    //var context = services.GetRequiredService<ApplicationDbContext>();
+                    //context.Database.Migrate();
 
                     var config = host.Services.GetRequiredService<IConfiguration>();
                     var tempPW = config[MiscConstants.SEED_TEMP_PW];

@@ -7,21 +7,21 @@ using lmsextreg.Constants;
 
 namespace lmsextreg.Authorization
 {
-    public class CanAccessApproverLinkHandler : AuthorizationHandler<CanAccessApproverLink>
+    public class CanAccessProfileLinkHandler : AuthorizationHandler<CanAccessProfileLink>
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public CanAccessApproverLinkHandler(SignInManager<ApplicationUser> signInMgr)
+        public CanAccessProfileLinkHandler(SignInManager<ApplicationUser> signInMgr)
         {
             _signInManager = signInMgr;
         }        
 
         protected override Task HandleRequirementAsync (AuthorizationHandlerContext authContext,
-                                                        CanAccessApproverLink requirement)
+                                                        CanAccessProfileLink requirement)
         {
-            bool isSignedIn         = false;
-            bool isTwoFactorEnabled = false;
-            bool isApprover         = false;
+            bool isSignedIn             = false;
+            bool isTwoFactorEnabled     = false;
+            bool isStudentOrApprover    = false;
 
             if ( _signInManager != null )
             {
@@ -43,18 +43,20 @@ namespace lmsextreg.Authorization
 
                     if ( authContext != null && authContext.User != null)
                     {
-                        isApprover = authContext.User.IsInRole("APPROVER");
+                        bool isStudent      = authContext.User.IsInRole("STUDENT");
+                        bool isApprover     = authContext.User.IsInRole("APPROVER");
+                        isStudentOrApprover = (isStudent || isApprover);
                     }
                 }
             }
        
-            Console.WriteLine("[CanAccesApproverLinkHandler][HandleRequirementAsync] - (isSignedInn)........: " + isSignedIn);
-            Console.WriteLine("[CanAccesApproverLinkHandler][HandleRequirementAsync] - (isTwoFactorEnabled).: " + isTwoFactorEnabled);
-            Console.WriteLine("[CanAccesApproverLinkHandler][HandleRequirementAsync] - (isApprover).........: " + isApprover);
+            Console.WriteLine("[CanAccessProfileLinkHandler][HandleRequirementAsync] - (isSignedInn)........: " + isSignedIn);
+            Console.WriteLine("[CanAccessProfileLinkHandler][HandleRequirementAsync] - (isTwoFactorEnabled).: " + isTwoFactorEnabled);
+            Console.WriteLine("[CanAccessProfileLinkHandler][HandleRequirementAsync] - (isStudentOrApprover.: " + isStudentOrApprover);
 
             if ( isSignedIn 
                     && isTwoFactorEnabled 
-                    && isApprover )
+                    && isStudentOrApprover )
             {
                 authContext.Succeed(requirement);
             }            

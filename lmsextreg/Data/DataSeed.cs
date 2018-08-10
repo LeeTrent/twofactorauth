@@ -221,9 +221,9 @@ namespace lmsextreg.Data
 
             // Set up Jason and Al as approvers
             emailNotify = true;
-            await EnsureApprover(svcProvider, "jason.womack@gsa.gov",  tempPW, "Jason", "Womack", "GS", "GS03", "PC", emailNotify);    
-            await EnsureApprover(svcProvider, "alfred.ortega@gsa.gov", tempPW, "Al",    "Ortega", "GS", "GS03", "PC", emailNotify);    
-
+            await EnsureApprover(svcProvider, "jason.womack@gsa.gov",       tempPW, "Jason", "Womack", "GS", "GS03",        "PC",   emailNotify);    
+            await EnsureApprover(svcProvider, "jason.womack+t1@gsa.gov",    tempPW, "Jason", "Womack (+t1)", "GS", "GS03",  "PC",   emailNotify);    
+            await EnsureApprover(svcProvider, "alfred.ortega@gsa.gov",      tempPW, "Al",    "Ortega", "GS", "GS03",        "PC",   emailNotify);    
             /////////////////////////////////////////////////////////////////////////////////////////
             // Default setting for program approvers is:
             // emailNotify = true; 
